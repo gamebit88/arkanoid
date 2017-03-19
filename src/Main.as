@@ -15,7 +15,7 @@ package
 	{
         public var paddle:Paddle;
         public var ball:Ball;
-        public var bricks:Bricks;
+        //public var bricks:Bricks;
         private var menuScreen:MenuScreen;
         private var bg:Bg_screen;
         
