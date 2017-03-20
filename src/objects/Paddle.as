@@ -11,8 +11,6 @@ package objects
     public class Paddle extends Sprite
     {
         public var paddle_symb:Paddle_symb;
-        private var stage_width:Number;
-        private var stage_height:Number;
         
         public function Paddle():void 
         {
@@ -25,8 +23,6 @@ package objects
         private function init(e:Event = null):void 
         {
             removeEventListener(Event.ADDED_TO_STAGE, init);
-            this.stage_width = stage.stageWidth;
-            this.stage_height = stage.stageHeight;
             paddle_symb = new Paddle_symb();
             setDefaultPaddlePosition();
         }
@@ -41,20 +37,19 @@ package objects
             stage.removeEventListener(MouseEvent.MOUSE_MOVE, movePaddleListener);            
         }
         
-        private function setDefaultPaddlePosition():void 
+        public function setDefaultPaddlePosition():void 
         {
-            paddle_symb.x = stage_width / 2;
-            paddle_symb.y = stage_height - paddle_symb.height * 2;
+            paddle_symb.x = stage.stageWidth / 2;
+            paddle_symb.y = stage.stageHeight - paddle_symb.height * 2;
             addChild(paddle_symb);
         }
         
         public function movePaddleListener(e:MouseEvent):void 
         {
-            //Mouse.hide();
             paddle_symb.x = mouseX;
-            if (paddle_symb.x + paddle_symb.width / 2 >= stage_width)
+            if (paddle_symb.x + paddle_symb.width / 2 >= stage.stageWidth)
             {
-                paddle_symb.x = stage_width - paddle_symb.width / 2;
+                paddle_symb.x = stage.stageWidth - paddle_symb.width / 2;
             } else if (paddle_symb.x - paddle_symb.width / 2 <= 0)
             {
                 paddle_symb.x = 0 + paddle_symb.width / 2;

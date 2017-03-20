@@ -16,7 +16,7 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'19.03.2017'</value>
+      <value>'20.03.2017'</value>
     </define>
     <define append="true">
       <name>CONFIG::air</name>
@@ -32,20 +32,20 @@
     </define>
     <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
-      <path-element>D:\Programming\flash\GAMES\Arkanoid\arkanoid\src</path-element>
+      <path-element>D:\Programming\flash\arkanoid\src</path-element>
       <path-element>C:\Program Files\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <library-path append="true">
-      <path-element>D:\Programming\flash\GAMES\Arkanoid\arkanoid\lib</path-element>
+      <path-element>D:\Programming\flash\arkanoid\lib</path-element>
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>D:\Programming\flash\GAMES\Arkanoid\arkanoid\src\Main.as</path-element>
+    <path-element>D:\Programming\flash\arkanoid\src\Main.as</path-element>
   </file-specs>
   <default-background-color>#FFFFFF</default-background-color>
   <default-frame-rate>30</default-frame-rate>
   <default-size>
-    <width>400</width>
+    <width>440</width>
     <height>480</height>
   </default-size>
 </flex-config>
