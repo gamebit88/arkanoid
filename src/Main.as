@@ -13,15 +13,16 @@ package
 	[Frame(factoryClass="Preloader")]
 	public class Main extends Sprite 
 	{
-        public var paddle:Paddle;
-        public var ball:Ball;
-        public var bricksArr:Array = [];
+        private var paddle:Paddle;
+        private var ball:Ball;
+        private var bricksArr:Array = [];
         private var menuScreen:MenuScreen;
         private var bg:Bg_screen;
         private var scoreTF:TF;
         private var livesTF:TF;
         private var levelTF:TF;
-        public var Leveles:Levels;
+        private var Leveles:Levels;
+        private var gameEvent:String;
         
 		public function Main() 
 		{
@@ -58,7 +59,7 @@ package
             paddle = new Paddle(); addChild(paddle);
             
             ball = new Ball(paddle);
-            ball.setBricks(Leveles, Leveles.bricksArr);
+            ball.setBricks(Leveles, Leveles.bricksArr, scoreTF);
             addChild(ball);
             
             bg.addEventListener(MouseEvent.MOUSE_UP, startGame);
@@ -67,41 +68,53 @@ package
         private function startGame(e:MouseEvent):void 
         {
             Mouse.hide();
-            bg.removeEventListener(MouseEvent.MOUSE_UP, startGame);
-            ball.setDefaultBallPosition();
-            paddle.setDefaultPaddlePosition();
-            ball.start(); paddle.start();
-            ball.addEventListener(BallEvents.BALL_LOSE, ballLoseListener);
-            ball.addEventListener(BallEvents.LEVEL_DONE, levelDoneListener);
-            bg.addEventListener(MouseEvent.MOUSE_UP, pauseGame);
-        }
-        
-        private function restartGame():void 
-        {
-            ball.stop(); paddle.stop();
-            Mouse.hide();
-            ball.setDefaultBallPosition();
-            paddle.setDefaultPaddlePosition();
-            ball.addEventListener(BallEvents.BALL_LOSE, ballLoseListener);
-            ball.addEventListener(BallEvents.LEVEL_DONE, levelDoneListener);
-            bg.addEventListener(MouseEvent.MOUSE_UP, pauseGame);
+            switch (gameEvent) 
+            {
+                case "lose":
+                case "level_done":
+                    ball.stop(); paddle.stop();
+                    ball.setDefaultBallPosition();
+                    paddle.setDefaultPaddlePosition();
+                    bg.addEventListener(MouseEvent.MOUSE_UP, inGame);
+                        
+                break;
+                    
+                default:
+                    bg.removeEventListener(MouseEvent.MOUSE_UP, startGame);
+                    ball.start(); paddle.start();
+                    ball.addEventListener(BallEvents.BALL_LOSE, ballLoseListener);
+                    ball.addEventListener(BallEvents.LEVEL_DONE, levelDoneListener);
+                    bg.addEventListener(MouseEvent.MOUSE_UP, pauseGame);
+            }
         }
         
         private function ballLoseListener(e:Event):void 
         {
             ball.removeEventListener(BallEvents.BALL_LOSE, ballLoseListener);
             livesTF.val -= 1;
-            restartGame();
+            if (livesTF.val > 0) 
+            {
+                gameEvent = e.type;  startGame(null);
+                ball.addEventListener(BallEvents.BALL_LOSE, ballLoseListener);
+            }
+            else
+            {
+                gameEvent = null;
+                endGame();
+            }
         }
         
         private function levelDoneListener(e:BallEvents):void 
         {
             ball.removeEventListener(BallEvents.LEVEL_DONE, levelDoneListener);
             Leveles.currentLevel += 1;
+            levelTF.val = Leveles.currentLevel + 1;
             if (Leveles.currentLevel <= Leveles.levels.length - 1)
             {
+                gameEvent = e.type;
                 Leveles.buildLevel(Leveles.levels[Leveles.currentLevel]);
                 ball.addEventListener(BallEvents.LEVEL_DONE, levelDoneListener);
+                startGame(null);
             }
             else endGame();
             

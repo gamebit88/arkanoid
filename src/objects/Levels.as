@@ -10,8 +10,8 @@ package objects
     {
         public var brick:Brick;
         public var levels:Array = [];
-        public var _bricksArr:Array = [];
-        public var _currentLevel:int = 0;
+        private var _bricksArr:Array = [];
+        private var _currentLevel:int = 0;
         
         public const LEVEL_1:Array = [[0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                                       [0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -37,7 +37,7 @@ package objects
         
         public function Levels():void 
         {
-            levels.push(LEVEL_TEST);
+            levels.push(LEVEL_TEST, LEVEL_1);
             if (stage) init();
             else addEventListener(Event.ADDED_TO_STAGE, init);
         }

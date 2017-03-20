@@ -10,19 +10,21 @@ package objects
      */
     public class Ball extends Sprite 
     {
-        public var ball_symb:Ball_symb;
+        private var ball_symb:Ball_symb;
         private static const BALL_WIDTH:Number = 20;
         private static const BALL_HEIGHT:Number = 20;
-        private var BALL_SPEEDx:Number = 8;
-        private var BALL_SPEEDy:Number = 8;
-        public var paddle:Paddle;
-        public var bricksArr:Array = [];
-        public var currentLevel:Levels;
+        private var BALL_SPEEDx:Number = 6;
+        private var BALL_SPEEDy:Number = 6;
+        private var paddle:Paddle;
+        private var bricksArr:Array = [];
+        private var currentLevel:Levels;
         private var ballPosition:Number;
         private var hitPercent:Number;
         private var nextX:Number;
         private var nextY:Number;
         private var point:Point;
+        private var score:TF;
+        private const BONUS:int = 10;
         
         public function Ball(paddle:Paddle):void 
         {
@@ -37,11 +39,11 @@ package objects
         
         private function init(e:Event = null):void 
         {
+            //ball_symb.width = BALL_WIDTH;
+            //ball_symb.height = BALL_HEIGHT;
             removeEventListener(Event.ADDED_TO_STAGE, init);
             ball_symb = new Ball_symb();
             setDefaultBallPosition();
-            //ball_symb.width = BALL_WIDTH;
-            //ball_symb.height = BALL_HEIGHT;
             point = new Point(ball_symb.x, ball_symb.y);
         }
         
@@ -58,12 +60,13 @@ package objects
         public function setDefaultBallPosition():void
         {
             ball_symb.x = stage.stageWidth / 2 - ball_symb.width / 2;
-            ball_symb.y = stage.stageHeight / 1.2;
+            ball_symb.y = paddle.paddle_symb.y - ball_symb.height;
             addChild(ball_symb);
         }
         
-        public function setBricks(currentLevel:Levels, arr:Array):void
+        public function setBricks(currentLevel:Levels, arr:Array, score:TF):void
         {
+            this.score = score;
             this.currentLevel = currentLevel;
             bricksArr = arr;
         }
@@ -72,7 +75,7 @@ package objects
         {
             
             ball_symb.x += BALL_SPEEDx;
-            ball_symb.y -= BALL_SPEEDy;
+            ball_symb.y += BALL_SPEEDy;
             point.x += BALL_SPEEDx;
             point.y += BALL_SPEEDy;
             
@@ -112,20 +115,15 @@ package objects
                     BALL_SPEEDy *= -1; 
                     currentLevel.removeChild(bricksArr[i]); 
                     bricksArr.splice(i, 1);
+                    score.val += BONUS;
                 } 
             }
             
             if (bricksArr.length < 1)
             {
-                //trace("win");
                 dispatchEvent(new BallEvents(BallEvents.LEVEL_DONE));
             }
-            
         }
-            
-        
-        
-        
     }
 
 }
