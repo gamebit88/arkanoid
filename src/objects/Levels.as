@@ -11,6 +11,7 @@ package objects
         public var brick:Brick;
         public var levels:Array = [];
         public var _bricksArr:Array = [];
+        public var _currentLevel:int = 0;
         
         public const LEVEL_1:Array = [[0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                                       [0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -36,7 +37,7 @@ package objects
         
         public function Levels():void 
         {
-            levels.push(LEVEL_1);
+            levels.push(LEVEL_TEST);
             if (stage) init();
             else addEventListener(Event.ADDED_TO_STAGE, init);
         }
@@ -44,7 +45,7 @@ package objects
         private function init(e:Event = null):void 
         {
             removeEventListener(Event.ADDED_TO_STAGE, init);
-            buildLevel(LEVEL_TEST);
+            buildLevel(levels[_currentLevel]);
             
         }
         
@@ -71,6 +72,16 @@ package objects
         public function get bricksArr():Array
         {
             return _bricksArr;
+        }
+        
+        public function set currentLevel(val:int):void
+        {
+            _currentLevel++;
+        }
+        
+        public function get currentLevel():int
+        {
+            return _currentLevel;
         }
         
     }

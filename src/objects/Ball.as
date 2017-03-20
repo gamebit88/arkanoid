@@ -13,8 +13,8 @@ package objects
         public var ball_symb:Ball_symb;
         private static const BALL_WIDTH:Number = 20;
         private static const BALL_HEIGHT:Number = 20;
-        private var BALL_SPEEDx:Number = 6;
-        private var BALL_SPEEDy:Number = 6;
+        private var BALL_SPEEDx:Number = 8;
+        private var BALL_SPEEDy:Number = 8;
         public var paddle:Paddle;
         public var bricksArr:Array = [];
         public var currentLevel:Levels;
@@ -72,7 +72,7 @@ package objects
         {
             
             ball_symb.x += BALL_SPEEDx;
-            ball_symb.y += BALL_SPEEDy;
+            ball_symb.y -= BALL_SPEEDy;
             point.x += BALL_SPEEDx;
             point.y += BALL_SPEEDy;
             
