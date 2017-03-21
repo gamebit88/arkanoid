@@ -50,18 +50,17 @@ package
             bg = new Bg_screen();
             addChild(bg);
             
+            Leveles = new Levels(); addChild(Leveles);
+            
             scoreTF = new TF("Score: ", 0, "left"); addChild(scoreTF);
             livesTF = new TF("Lives: ", 3, "center"); addChild(livesTF);
             levelTF = new TF("Level: ", 1, "right"); addChild(levelTF);
-            
-            Leveles = new Levels(); addChild(Leveles);
             
             paddle = new Paddle(); addChild(paddle);
             
             ball = new Ball(paddle);
             ball.setBricks(Leveles, Leveles.bricksArr, scoreTF);
             addChild(ball);
-            
             bg.addEventListener(MouseEvent.MOUSE_UP, startGame);
         }
         
@@ -72,6 +71,7 @@ package
             {
                 case "lose":
                 case "level_done":
+                    Mouse.show();
                     ball.stop(); paddle.stop();
                     ball.setDefaultBallPosition();
                     paddle.setDefaultPaddlePosition();
