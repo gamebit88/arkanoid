@@ -116,8 +116,10 @@ package
                 ball.addEventListener(BallEvents.LEVEL_DONE, levelDoneListener);
                 startGame(null);
             }
-            else endGame();
-            
+            else
+            {
+                gameEvent = null; endGame();
+            }
         }
         
         private function endGame():void 
@@ -158,7 +160,5 @@ package
             paddle.start();
             bg.addEventListener(MouseEvent.MOUSE_UP, pauseGame);
         }
-        
 	}
-
 }
